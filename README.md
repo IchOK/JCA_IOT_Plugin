@@ -1,2 +1,2 @@
-# JCA_Plugin_IOT
+# JCA_IOT_Plugin
 Plugin for PainlessMesh
