@@ -1,0 +1,54 @@
+//ELEMENT::cRoot:config
+
+void config(JsonObject& jsonObj){
+   JsonArray JsonConfig;
+   char ConfigName[JCA_IOT_ELEMENT_NAME_LEN];
+   
+   //Init Inputs
+   if (JsonObj.containsKey("input")){
+      JsonConfig = JsonObj["input"];
+      for(JsonObject ConfigInput : JsonConfig){
+         //check JsonObject for needed Keys
+         if (ConfigInput.containsKey("name") && ConfigInput.containsKey("element") && ConfigInput.containsKey("tag")){
+            strncpy(ConfigName, ConfigInput["name"], JCA_IOT_ELEMENT_NAME_LEN);
+            //search Input in Vector by Name
+            for (int i = 0; i < Input.size(); i++){
+               if (strcmp(Input[i].Name,ConfigName) == 0){
+                  Input[i].config(ConfigInput["element"].as<unsigned char>(), ConfigInput["tag"].as<unsigned char>());
+               }
+            }
+         }
+      }
+   }
+   
+   //Init Data
+   if (JsonObj.containsKey("data")){
+      JsonConfig = JsonObj["data"];
+      for(JsonObject ConfigData : JsonConfig){
+         //check JsonObject for needed Keys
+         if (ConfigData.containsKey("name") && ConfigData.containsKey("value")){
+            strncpy(ConfigName, ConfigData["name"], JCA_IOT_ELEMENT_NAME_LEN);
+            //search Data in Vector by Name
+            for (int i = 0; i < Data.size(); i++){
+               if (strcmp(Data[i].Name,ConfigName) == 0){
+                  switch(Data[i].Type){
+                     JCA_IOT_ELEMENT_DATA_BOOL:
+                        (static_cast<cDataBool*>(Data[i])).config(ConfigData["value"].as<bool>())
+                        break;
+                     JCA_IOT_ELEMENT_DATA_INT:
+                        (static_cast<cDataInt*>(Data[i])).config(ConfigData["value"].as<int32_t>())
+                        break;
+                     JCA_IOT_ELEMENT_DATA_FLOAT:
+                        (static_cast<cDataFloat*>(Data[i])).config(ConfigData["value"].as<float>())
+                        break;
+                  }
+               }
+            }
+         }
+      }
+   }
+}
+
+ELEMENT::cRoot erweitern um Errorcode / Errortext z.B. Input-Name
+- Input nicht komplett initialisiert
+- ...
