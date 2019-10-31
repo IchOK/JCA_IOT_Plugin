@@ -15,31 +15,24 @@
  *    -addMesh
  **********************************************/
 
-#ifndef _JCA_IOT_ELEMENT_H
-#define _JCA_IOT_ELEMENT_H
+#ifndef _JCA_IOT_ELEMENT_DI_H
+#define _JCA_IOT_ELEMENT_DI_H
 
-#include "JCA_IOT_ELEMENT_define.h"
-#include "JCA_IOT_ELEMENT_Input.hpp"
-#include "JCA_IOT_ELEMENT_Data.hpp"
+#include "JCA_IOT_ELEMENT.hpp"
+#define JCA_IOT_ELEMENT_TYPE_DI 1
 
 //Include extrenal
-#include <vector>
-#include <ArduinoJson.h>
 
 namespace JCA{ namespace IOT{ namespace ELEMENT{
-   class cRoot{
+   class cDI : public cRoot {
     public:
-      std::vector<cInput*> Input;
-      std::vector<cData*> Data;
-      char Name[JCA_IOT_ELEMENT_NAME_LEN];
-      unsigned char Type;
       
       ////------------------------------
       //// Template Child-Class 
       ////------------------------------
       //// 
       //// create Input
-      cInputBool In1;
+      //cInputBool In1("in1");
       //cInput In2("in2");
       //// 
       //// create Datapoint
@@ -48,28 +41,23 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
       ////
       ////------------------------------
       
-      cRoot(const char* InName, const unsigned char InType){
-         strncpy(Name, InName, JCA_IOT_ELEMENT_NAME_LEN);
-         Type = InType;
+      cDI(const char* InName) : cRoot(InName, JCA_IOT_ELEMENT_TYPE_DI) {
          
          ////------------------------------
          //// Template Child-Class
          ////------------------------------
          //// 
-		 //// init Inputs
-		 
          //// add Input to Vector
-         Input.push_back((cInput*)(&In1));
-         //Input.push_back(in2);
+         // Input.push_back(in1);
+         // Input.push_back(in2);
          //// add Data to Vector
-         //Data.push_back(data1);
-         //Data.push_back(data2);
+         // Data.push_back(data1);
+         // Data.push_back(data2);
          ////
          ////------------------------------
          
       }
       
-      void config(JsonObject& jsonObj){ ; };
       virtual void update(uint32_t DiffMillis){ ; };
       
    };

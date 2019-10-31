@@ -28,19 +28,19 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
       unsigned char Type;
       unsigned char QC;
       
-      cInput(const char* InName, const unsigned char InType) const {
+      cInput(const char* InName, const unsigned char InType) {
          strncpy(Name, InName, JCA_IOT_ELEMENT_NAME_LEN);
          Type = InType;
          QC = JCA_IOT_QC_CREAT;
       }
       
-      void config(const unsigned char Element, const unsigned char Tag) const {
+      void config(const unsigned char Element, const unsigned char Tag) {
          ElementIndex = Element;
          TagIndex = Tag;
          QC = JCA_IOT_QC_GOOD;
       }
       
-      bool isGood() const {
+      bool isGood() {
          return (QC && 0b10000000) != 0b00000000;
       }
    };
@@ -55,7 +55,8 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
     public:
       bool Value;
       
-      cInputBool(const char* InName) : cInput(InName, JCA_IOT_ELEMENT_DATA_BOOL) {
+//      cInputBool(const char* InName) : cInput(InName, JCA_IOT_ELEMENT_DATA_BOOL) {
+      cInputBool() : cInput("", JCA_IOT_ELEMENT_DATA_BOOL) {
          Value = false;
       }
    };

@@ -28,13 +28,14 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
       unsigned char Type;
       unsigned char QC;
       
-      cData(const char* InName, const unsigned char InType) const {
+      cData() { Type = 0; QC = JCA_IOT_QC_CREAT; }
+	  
+	  void init(const char* InName) {
          strncpy(Name, InName, JCA_IOT_ELEMENT_NAME_LEN);
-         Type = InType;
-         QC = JCA_IOT_QC_GOOD;
+         QC = JCA_IOT_QC_INIT;
       }
       
-      bool isGood() const {
+      bool isGood() {
          return (QC && 0b10000000) != 0b00000000;
       }
    };
@@ -49,11 +50,18 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
     public:
       bool Value;
       
-      cDataBool(const char* InName) : cData(InName, JCA_IOT_ELEMENT_DATA_BOOL) {
+      cDataBool() : cData() {
          Value = false;
       }
+	  
+	  void init(const char* InName, const unsigned char InType) {
+         strncpy(Name, InName, JCA_IOT_ELEMENT_NAME_LEN);
+         Type = InType;
+         QC = JCA_IOT_QC_GOOD;
+      }
       
-      void config(const bool InValue) const {
+      
+      void config(const bool InValue) {
          Value = InValue;
       }
    };
@@ -72,7 +80,7 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
          Value = 0;
       }
       
-      void config(const int32_t InValue) const {
+      void config(const int32_t InValue) {
          Value = InValue;
       }
    };
@@ -91,7 +99,7 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
          Value = 0.0;
       }
       
-      void config(const float InValue) const {
+      void config(const float InValue) {
          Value = InValue;
       }
    };
