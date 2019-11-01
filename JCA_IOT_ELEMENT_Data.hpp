@@ -2,11 +2,12 @@
  * Info: 	Die Sammlung enthält alle Klassen des
  *          Element-Vektor Data
  * Version:
- * 	V1.0.0	Erstellt	30.10.2019	JCA
- *		-cData
- *    -cDataBool
- *    -cDataInt
- *    -cDataFloat
+ * 	V1.0.0	Erstellt	   30.10.2019	JCA
+ *    - add Klassen
+ *		   -- cData
+ *       -- cDataBool
+ *       -- cDataInt
+ *       -- cDataFloat
  **********************************************/
 
 #ifndef _JCA_IOT_ELEMENT_DATA_H
@@ -20,7 +21,13 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
    * Info: 	cData ist die Root-Klasse aller Datapunkte
    *          und enthält grundlegende Funktionen
    * Version:
-   * 	V1.0.0	Erstellt	30.10.2019	JCA
+   * 	V1.0.0	Erstellt	   30.10.2019	JCA
+   *    -add Properties
+   *       -- Name, Tvpe, QC
+   *    -add Methoden
+   *       -- cData
+   *       -- init
+   *       -- isGood
    **********************************************/
    class cData{
     public:
@@ -28,9 +35,12 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
       unsigned char Type;
       unsigned char QC;
       
-      cData() { Type = 0; QC = JCA_IOT_QC_CREAT; }
+      cData(const unsigned char InType) {
+         Type = InType;
+         QC = JCA_IOT_QC_CREAT;
+      }
 	  
-	  void init(const char* InName) {
+	   void init(const char* InName) {
          strncpy(Name, InName, JCA_IOT_ELEMENT_NAME_LEN);
          QC = JCA_IOT_QC_INIT;
       }
@@ -45,24 +55,23 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
    * Info: 	Bildet einen Digitalen Datenpunkt des Elements ab
    * Version:
    * 	V1.0.0	Erstellt	30.10.2019	JCA
+   *    -add Properties
+   *       -- Value
+   *    -add Methoden
+   *       -- cDataBool
+   *       -- config
    **********************************************/
    class cDataBool : public cData{
     public:
       bool Value;
       
-      cDataBool() : cData() {
+      cDataBool() : cData(JCA_IOT_ELEMENT_DATA_BOOL) {
          Value = false;
       }
 	  
-	  void init(const char* InName, const unsigned char InType) {
-         strncpy(Name, InName, JCA_IOT_ELEMENT_NAME_LEN);
-         Type = InType;
-         QC = JCA_IOT_QC_GOOD;
-      }
-      
-      
       void config(const bool InValue) {
          Value = InValue;
+         QC = JCA_IOT_QC_DEFAULT;
       }
    };
    
@@ -71,17 +80,23 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
    * Info: 	Bildet einen Ganzzahl Datenpunkt des Elements ab
    * Version:
    * 	V1.0.0	Erstellt	30.10.2019	JCA
+   *    -add Properties
+   *       -- Value
+   *    -add Methoden
+   *       -- cDataInt
+   *       -- config
    **********************************************/
    class cDataInt : public cData{
     public:
       int32_t Value;
       
-      cDataInt(const char* InName) : cData(InName, JCA_IOT_ELEMENT_DATA_INT) {
+      cDataInt() : cData(JCA_IOT_ELEMENT_DATA_INT) {
          Value = 0;
       }
       
       void config(const int32_t InValue) {
          Value = InValue;
+         QC = JCA_IOT_QC_DEFAULT;
       }
    };
    
@@ -90,17 +105,23 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
    * Info: 	Bildet einen Gleitkommazahl Datenpunkt des Elements ab
    * Version:
    * 	V1.0.0	Erstellt	30.10.2019	JCA
+   *    -add Properties
+   *       -- Value
+   *    -add Methoden
+   *       -- cDataFloat
+   *       -- config
    **********************************************/
    class cDataFloat : public cData{
     public:
       float Value;
       
-      cDataFloat(const char* InName) : cData(InName, JCA_IOT_ELEMENT_DATA_FLOAT) {
+      cDataFloat() : cData(JCA_IOT_ELEMENT_DATA_FLOAT) {
          Value = 0.0;
       }
       
       void config(const float InValue) {
          Value = InValue;
+         QC = JCA_IOT_QC_DEFAULT;
       }
    };
    
