@@ -34,7 +34,7 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
     public:
       char Name[JCA_IOT_ELEMENT_NAME_LEN];
       unsigned char ElementIndex;
-      unsigned char TagIndex;
+      unsigned char DataIndex;
       unsigned char Type;
       unsigned char QC;
       
@@ -47,9 +47,9 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
          strncpy(Name, InName, JCA_IOT_ELEMENT_NAME_LEN);
       }
       
-      void config(const unsigned char Element, const unsigned char Tag) {
+      void config(const unsigned char Element, const unsigned char Data) {
          ElementIndex = Element;
-         TagIndex = Tag;
+         DataIndex = Data;
          QC = JCA_IOT_QC_INIT;
       }
       
