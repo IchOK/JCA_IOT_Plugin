@@ -5,8 +5,11 @@
  *    V1.0.0   Erstellt   30.10.2019   JCA
  **********************************************/
 
-#ifndef _JCA_IOT_ELEMENT_DEFINE_H
-#define _JCA_IOT_ELEMENT_DEFINE_H
+#ifndef _JCA_IOT_define_H
+#define _JCA_IOT_define_H
+
+#define JCA_IOT_HANDLER_JSON_DOCSIZE 1024
+#define JCA_IOT_HANDLER_FILE_MAXSIZE 4096
 
 #define JCA_IOT_ELEMENT_NAME_LEN 30
 
@@ -42,8 +45,7 @@
 #define JCA_IOT_QC_CREAT      0b01111100
 #define JCA_IOT_QC_COMMFAULT  0b00011000
 #define JCA_IOT_QC_COMMLAST   0b01010100
-#define JCA_IOT_QC_CONFNAME   0b00000100
-#define JCA_IOT_QC_CONFTYPE   0b00000101
+#define JCA_IOT_QC_CONFCREAT  0b00000100
 
 
 #endif

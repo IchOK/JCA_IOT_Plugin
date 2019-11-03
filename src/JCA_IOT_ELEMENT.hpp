@@ -21,7 +21,7 @@
 #ifndef _JCA_IOT_ELEMENT_H
 #define _JCA_IOT_ELEMENT_H
 
-#include "JCA_IOT_ELEMENT_define.h"
+#include "JCA_IOT_define.h"
 #include "JCA_IOT_ELEMENT_Input.hpp"
 #include "JCA_IOT_ELEMENT_Data.hpp"
 
