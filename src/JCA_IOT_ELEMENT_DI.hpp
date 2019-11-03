@@ -17,10 +17,12 @@
 #ifndef _JCA_IOT_ELEMENT_DI_H
 #define _JCA_IOT_ELEMENT_DI_H
 
+#include "JCA_IOT_HANDLER.hpp"
 #include "JCA_IOT_ELEMENT.hpp"
 #define JCA_IOT_ELEMENT_TYPE_DI 1
 
 //Include extrenal
+#include <string.h>
 
 namespace JCA{ namespace IOT{ namespace ELEMENT{
    class cDI : public cRoot {
@@ -47,12 +49,49 @@ namespace JCA{ namespace IOT{ namespace ELEMENT{
       }
       
       virtual void update(uint32_t DiffMillis) {
+         #if DEBUGLEVEL >= 3
+            Serial.println(F(" START - cDI.update()"));
+            Serial.printf("  Name:%s\r\n",Name);
+         #endif
          
          //Inputs will be updated by the global Handler
          DataInput.Value = digitalRead(Pin);
+         #if DEBUGLEVEL >= 3
+            Serial.printf("  Value:%i\r\n",DataInput.Value);
+            Serial.println(F(" DONE - cDI.update()"));
+         #endif
       }
       
-      
+   };
+   
+   void createDI(JsonObject JConf, std::vector<JCA::IOT::ELEMENT::cRoot*>& InElements){
+      #if DEBUGLEVEL >= 2
+         Serial.println(F("START - createDI()"));
+      #endif
+      if (JConf.containsKey("name") && JConf.containsKey("pin")){
+         char InName[JCA_IOT_ELEMENT_NAME_LEN];
+         unsigned char InPin;
+         bool InPullup = false;
+         
+         InPin = JConf["pin"].as<unsigned char>();
+         strcpy(InName, JConf["name"].as<char*>());
+          
+         #if DEBUGLEVEL >= 2
+            Serial.printf("  Name:%s - Pin:%i\r\n", InName, InPin);
+         #endif
+         if (JConf.containsKey("pullup")){
+            InPullup = JConf["pullup"].as<bool>();
+         }
+         InElements.push_back(new cDI(InName, InPin, InPullup));
+         InElements.back()->config(JConf);
+      }
+      #if DEBUGLEVEL >= 2
+         Serial.println(F("DONE - createDI()"));
+      #endif
+   };
+   
+   void beginDI(JCA::IOT::cHandler& Handler){
+      Handler.CreateElement.insert( std::pair<String, std::function<void(JsonObject, std::vector<ELEMENT::cRoot*>&)> >("DI", createDI));
    };
 }}}
 
